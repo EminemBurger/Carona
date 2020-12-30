@@ -1,13 +1,12 @@
-const { request, response } = require('express')
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();    
 const signUpTemplateCopy = require('../models/SignUpModels')
-const bcrypt = require('bcrypt')
-const bcryptjs = require('bcryptjs')
-const { check, validationResult } = require('express-validator')
-const jwt = require('jsonwebtoken')
-const config = require('config')
-const auth = require('../middleware/auth')
+const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
+const { check, validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
+const config = require('config');
+const auth = require('../middleware/auth');
 
 router.get(
     '/',
@@ -21,7 +20,7 @@ router.get(
             return res.status(500).json({msg: "Server Error..."});
         }
     }
-)
+);
 
 router.post('/signup', 
     [
@@ -32,9 +31,13 @@ router.post('/signup',
     
     async (request,response) => {
   
-    let {fullname, username, email, password} = request.body;
+    const fullname = request.body.fullname;
+    const username = request.body.username;
+    const email = request.body.email;
+    const password = request.body.password;
+
     let user = await signUpTemplateCopy.findOne({email});
-    const errors = validationResult(request);
+    const errors = validationResult(request.body);
 
     
 
@@ -57,7 +60,7 @@ router.post('/signup',
         username: username,
         email: email,
         password: securePassword
-    })
+    });
 
     await signedUpUser.save()
 
@@ -76,7 +79,7 @@ router.post('/signup',
     )
 
 
-})
+});
 
 
 router.post(
@@ -87,10 +90,11 @@ router.post(
     ],
     async (request, response) => {
         try{
+            const email = request.body.email;
+            const password = request.body.password;
 
-            const {email, password} = request.body;
             let user = await signUpTemplateCopy.findOne({email});
-            const errors = validationResult(request);
+            const errors = validationResult(request.body);
 
             if (!errors.isEmpty()) {
                 return response.status(401).json({errors: errors.array()});
@@ -126,8 +130,7 @@ router.post(
             console.log(error.msg);
             return response.status(500).json({msg: "Server Error..."});
         }
-})
+});
 
 
-
-module.exports = router
+module.exports = router;
