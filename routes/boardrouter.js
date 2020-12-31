@@ -9,9 +9,9 @@ router.post("/:board", async (req, res) => {
     try {
         var Id = require('mongodb').ObjectID; 
 
-        let { writer, title, content } = req.body;
-      
-      
+        const writer = req.body._id;
+        const title = req.body.title;
+        const content = req.body.content;      
 
         let o_id = new Id(writer);
 
@@ -47,14 +47,19 @@ router.post("/:board", async (req, res) => {
 
   router.put("/:board", async (req, res) => {
     try {
-        
-    let { _id ,title, content } = req.body;
+      const _id = req.body._id;
+      const title = req.body.updatetitle;
+      const content = req.body.updatecontent;  
+
 
     var Id = require('mongodb').ObjectID; 
     let o_id = new Id(_id);
 
+
+   
+
       await boardTemplateCopy.updateOne(
-        { writer: o_id, title: title, content: content },
+        { writer: o_id, title: title},
         {
           $set: {
             title: title,
@@ -72,12 +77,15 @@ router.post("/:board", async (req, res) => {
 
   router.delete("/:board", async (req, res) => {
     try {
-      let { title, createdAt } = req.body;
-
+      const username = req.body.username;
+      const title = req.body.title;
+      const content = req.body.content;
 
 
       await boardTemplateCopy.deleteOne({
-        "title": title
+        "username": username,
+        "title": title,
+        "content": content
       });
       res.json({ message: true });
     } catch (err) {
