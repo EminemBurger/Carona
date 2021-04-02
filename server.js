@@ -4,10 +4,12 @@ const routesUrls = require('./routes/routes');
 const boardrouteUrls = require('./routes/boardrouter');
 const bodyparser = require('body-parser');
 const cors = require('cors');
-const connectToDateBase = require('./config/connectToDatabase');
+const connectToDateBase = require('./connectToDatabase');
+const dotenv = require('dotenv');
 
 app.use(cors())
 
+dotenv.config();
 connectToDateBase();
 
 
@@ -18,6 +20,6 @@ app.use(bodyparser.urlencoded({
 app.use('/app', routesUrls);
 app.use('/boardapp', boardrouteUrls);
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => console.log("server is running"));
