@@ -5,8 +5,10 @@ const bcrypt = require('bcrypt');
 const bcryptjs = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
-const config = require('config');
 const auth = require('../middleware/auth');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 router.get(
     '/',
@@ -71,7 +73,7 @@ router.post('/signup',
     }
     jwt.sign(
         payload,
-        config.get('jwtSecret'),
+        process.env.jwtSecret ,
         (err, token) => {
             if (err) throw err;
             response.json({token});
@@ -115,7 +117,7 @@ router.post(
             }
             jwt.sign(
                 payload,
-                config.get('jwtSecret'),
+                process.env.jwtSecret ,
                 (err, token) => {
                     if (err) throw err;
                     response.json({token});
