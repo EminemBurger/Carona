@@ -1,5 +1,4 @@
-import './App.css';
-import { Link, BrowserRouter, Route, Switch } from 'react-router-dom'
+import {  BrowserRouter, Route, Switch } from 'react-router-dom'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import store from './store'
@@ -7,55 +6,32 @@ import { Provider } from 'react-redux'
 import React, { useEffect } from 'react'
 import { loadUser } from './action/auth';
 import { setToken } from './setToken';
+
 import Home from './pages/Home';
-import Loginbtn from './components/loginbtn'
 import Forum from './pages/Forum'
 import Board from './pages/Board'
 import BoardDetail from './pages/BoardDetail'
 import Map from './pages/Mappage'
-import $ from 'jquery'
 
-if (localStorage.getItem('token')) {
-  setToken(localStorage.getItem('token'));
+import  Nav  from './components/Nav';
+
+if (sessionStorage.getItem('token')) {
+  setToken(sessionStorage.getItem('token'));
 }
 
 const App = () => {
 
   useEffect(() => {
     store.dispatch(loadUser());
-
-    $('a').on('mouseover', function () {
-      $(this).parents('ul').addClass('nav-focused');
-    });
-
-    $('a').on('mouseout', function () {
-      $(this).parents('ul').removeClass('nav-focused');
-    })
-
-
-
   }, [])
 
   return (
 
     <Provider store={store}>
-      <div>
+      <div style={{minHeight:'100vh', height:'100vh'}}>
 
         <BrowserRouter>
-          <nav className="nav">
-            <ul>
-              <Link to="/">Home</Link>
-            </ul>
-            <ul>
-              <Link to="/Forum">Forum</Link>
-            </ul>
-            <ul>
-              <Link to="/Map">Map</Link>
-            </ul>
-            <ul>
-              <Loginbtn />
-            </ul>
-          </nav>
+          <Nav/>
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/Login" component={Login} />

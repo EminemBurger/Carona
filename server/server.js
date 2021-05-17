@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const routesUrls = require('./routes/routes');
 const boardrouteUrls = require('./routes/boardrouter');
+const MaprouteUrls = require('./routes/Maprouter');
 const bodyparser = require('body-parser');
 const cors = require('cors');
 const connectToDateBase = require('./connectToDatabase');
@@ -21,17 +22,11 @@ app.use(bodyparser.urlencoded({
 }));
 
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static("client/build"));
 
-    app.get("*", (req,res) => {
-        res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
-    });
-}
 
 app.use('/app', routesUrls);
 app.use('/boardapp', boardrouteUrls);
+app.use('/map', MaprouteUrls);
 
-const PORT = process.env.PORT || 8080;
 
-app.listen(PORT, () => console.log("server is running"));
+app.listen(process.env.PORT , () => console.log("server is running"));

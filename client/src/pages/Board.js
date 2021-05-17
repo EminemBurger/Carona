@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import '../App.css'
 import Button from '@material-ui/core/Button';
 import { Link, useHistory, useLocation } from 'react-router-dom'
-import jsonwebtoken from 'jsonwebtoken'
 import axios from 'axios'
+import Modal from '../components/Modal';
 
 export default function Board() {
 
@@ -15,6 +15,10 @@ export default function Board() {
 
     const [updatetitle, Setupdatetitle] = useState(location.state.title)
     const [updatecontent, Setupdatecontent] = useState(location.state.content)
+    const createdAt = location.state.createdAt;
+
+    const [show, SetShow] = useState(false);
+    const [message, SetMessage] = useState('');
 
     const modify = location.state.modify
 
@@ -42,9 +46,7 @@ export default function Board() {
 
                     </Link>
                     <Button color="primary" variant="contained" style={{ float: "right", marginRight: "10px" }}
-                        onClick={(e) => {
-                            const token = localStorage.getItem('token');
-                            const _id = jsonwebtoken.decode(token).user.id;
+                        onClick={ async (e) => {
                             const config = {
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -52,18 +54,24 @@ export default function Board() {
                             }
 
 
-                            const body = JSON.stringify({ _id, updatetitle, updatecontent })
+                            const body = JSON.stringify({updatetitle, updatecontent, createdAt })
 
 
-                            axios.put('http://localhost:4000/boardapp/:board', body, config)
-                                .then(history.push('/Forum'))
-                                .catch(function (error) { console.log(error) });
+                            await axios.put('http://localhost:4000/boardapp/:board', body, config)
+                                .then(function(response) {
+                                    history.push('/Forum');
+                                })
+                                .catch(function (error) { 
+                                    SetShow(true);
+                                    SetMessage('작성자가 아니기 때문에 수정할 수 없습니다!');
+                                    console.log(error);
+                                });
 
                         }}>
                         수정
                 </Button>
                 </div>
-
+                <Modal show={show} SetShow={SetShow} Message={message}/>
             </div>
         )
 
@@ -94,8 +102,6 @@ export default function Board() {
                     </Link>
                     <Button color="primary" variant="contained" style={{ float: "right", marginRight: "10px" }}
                         onClick={(e) => {
-                            const token = localStorage.getItem('token');
-                            const _id = jsonwebtoken.decode(token).user.id;
                             const config = {
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -103,7 +109,7 @@ export default function Board() {
                             }
 
 
-                            const body = JSON.stringify({ _id, title, content })
+                            const body = JSON.stringify({ title, content })
 
 
                             axios.post('http://localhost:4000/boardapp/:board', body, config)

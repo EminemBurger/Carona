@@ -11,7 +11,7 @@ import {
 
 
 const initialState = {
-    token: localStorage.getItem('token'),
+    token: sessionStorage.getItem('token'),
     isLoggedIn: false,
     errors: {}
 }
@@ -21,13 +21,13 @@ const authReducer = (state = initialState, action) => {
     switch(type) {
         case REGISTER_SUCCESS:
         case LOGIN_SUCCESS:
-            localStorage.setItem('token', payload.token);
+            sessionStorage.setItem('token', payload.token);
             return {
                 ...state,
                 isLoggedIn: true
             }        
         case LOAD_USER:
-            localStorage.getItem('token');
+            sessionStorage.getItem('token');
             return {
                 ...state,
                 isLoggedIn: true
@@ -36,7 +36,7 @@ const authReducer = (state = initialState, action) => {
         case LOGIN_FAIL:
         case REGISTER_FAIL:
         case AUTH_ERROR:
-            localStorage.removeItem('token');
+            sessionStorage.removeItem('token');
             return {
                 ...state,
                 isLoggedIn: false,
@@ -44,7 +44,7 @@ const authReducer = (state = initialState, action) => {
 
             }
         case LOG_OUT:
-            localStorage.removeItem('token');
+            sessionStorage.removeItem('token');
             return {
                 ...state,
                 isLoggedIn: false,

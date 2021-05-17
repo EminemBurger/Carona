@@ -17,8 +17,9 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import '../App.css'
 import axios from 'axios'
-import Button from '@material-ui/core/Button';
 import {Link} from 'react-router-dom'
+import  BoardBtn  from '../components/BoardBtn';
+
 
 
 const useStyles1 = makeStyles((theme) => ({
@@ -105,41 +106,50 @@ export default function Forum() {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [rows, setRows] = useState([]);
-  
+
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
   
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
     };
+
+
+
   
     const handleChangeRowsPerPage = (event) => {
       setRowsPerPage(parseInt(event.target.value, 10));
       setPage(0);
+
     };
 
+
+    const loadBoard = async () => {
+      await axios.get('http://localhost:4000/boardapp/:board')
+      .then((response) => setRows([...response.data]))
+      .catch(function(error) { console.log(error)});
+    };
+
+
     useEffect(() => {
-       axios.get('http://localhost:4000/boardapp/:board')
-       .then((response) => setRows([...rows, ...response.data]))
-       .catch(function(error) { console.log(error)});
- 
-    
+      loadBoard();
     }, [])
 
 
+
     return (
-        <div className="wrap" style ={{display:"flex", alignItems:"center", flexDirection:"column"}}>
+        <div style ={{display:"flex", alignItems:"center", flexDirection:"column", height:'100vh'}}>
             
-                <TableContainer component={Paper} style={{marginTop:"50px", width: "1200px"}}>
+                <TableContainer component={Paper} style={{marginTop:"100px", width: "1200px"}}>
       <Table className={classes.table} aria-label="custom pagination table">
-        <TableHead style ={{backgroundColor:"skyblue"}}>
+        <TableHead style ={{backgroundColor:"#4a503d"}}>
         <TableRow>
-              <TableCell component="th" scope="row" style ={{fontWeight:"bold", fontSize:"15px"}}>
+              <TableCell component="th" scope="row" style ={{fontWeight:"bold", fontSize:"15px", color: '#faf2da '}}>
                 제목
               </TableCell>
-              <TableCell style={{ width: 160 , fontWeight:"bold", fontSize:"15px"}} align="right">
+              <TableCell style={{ width: 160 , fontWeight:"bold", fontSize:"15px", color: '#faf2da '}} align="right">
                 글쓴이
               </TableCell>
-              <TableCell style={{ width: 160 , fontWeight:"bold", fontSize:"15px" }} align="right">
+              <TableCell style={{ width: 160 , fontWeight:"bold", fontSize:"15px", color: '#faf2da ' }} align="right">
                 날짜
               </TableCell>
             </TableRow>
@@ -156,7 +166,8 @@ export default function Forum() {
                 state: {
                   title: row.title,
                   username: row.username,
-                  content: row.content
+                  content: row.content,
+                  createdAt: row.createdAt,
                 }
               }}
               style={{textDecoration:"none"}}>
@@ -198,18 +209,10 @@ export default function Forum() {
         </TableFooter>
       </Table>
     </TableContainer>
-    <div style={{width:"1200px", marginTop:"15px"}}>
-      <Link to={{
-       pathname: "/Board",
-       state: {
-         modify: 0
-       }
-      }}>
-      <Button color="primary" variant="contained" style={{float:"right", marginRight:"10px"}}>
-              글쓰기
-      </Button>
-      </Link>
-    </div>
+    <BoardBtn/>
         </div>
     )
 }
+
+
+

@@ -2,6 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { logOut } from '../action/auth'
+import { setToken } from '../setToken'
+
+
 
 const loginbtn = ({isLoggedIn, logOut}) => {
 
@@ -16,7 +19,10 @@ const loginbtn = ({isLoggedIn, logOut}) => {
 
     else {
         return (
-            <p className="logbtn" onClick={(e) => logOut()}>
+            <p className="logbtn" onClick={(e) => {
+            logOut();
+            setToken(sessionStorage.getItem('token'));
+            }}>
                 Logout
             </p>
         )

@@ -15,7 +15,7 @@ router.get(
     auth,
     async (req, res) => {
         try {
-            const user = await signUpTemplateCopy.findById(req.body.id).select('-password');
+            const user = await signUpTemplateCopy.findById(req.user.id).select('-password');
             res.json(user);
         } catch (error) {
             console.log(error.msg);
@@ -25,29 +25,30 @@ router.get(
 );
 
 router.post('/signup', 
-    [
-
-        check('email', 'Type proper e-mail').isEmail(),
-        check('password', 'Password is required').not().isEmpty()
-    ],
-    
+[
+    check('email').isLength({min: 1}).withMessage("email is required").isEmail().withMessage("email is wrong"),
+    check('password').isLength({ min: 1 }).withMessage("password is required"),
+],
     async (request,response) => {
-  
+
+        const errors = validationResult(request);
+        
+        if (!errors.isEmpty()) {
+            return response.status(401).json({errors: errors.array()});
+            
+        }
+
     const fullname = request.body.fullname;
     const username = request.body.username;
     const email = request.body.email;
     const password = request.body.password;
 
     let user = await signUpTemplateCopy.findOne({email});
-    const errors = validationResult(request.body);
 
     
 
 
-    if (!errors.isEmpty()) {
-        return response.status(401).json({errors: errors.array()});
-        
-    }
+
 
     if (user) {
         return response.status(401).json({msg:"There is already user with this e-mail"})
@@ -87,20 +88,22 @@ router.post('/signup',
 router.post(
     '/signin',
     [
-        check('email', 'Type proper e-mail').isEmail(),
-        check('password', 'Password is required').not().isEmpty()
+        check('email').isLength({min: 1}).withMessage("email is required").isEmail().withMessage("email is wrong"),
+        check('password').isLength({ min: 1 }).withMessage("password is required"),
     ],
     async (request, response) => {
         try{
-            const email = request.body.email;
-            const password = request.body.password;
-
-            let user = await signUpTemplateCopy.findOne({email});
-            const errors = validationResult(request.body);
+            const errors = validationResult(request);
 
             if (!errors.isEmpty()) {
                 return response.status(401).json({errors: errors.array()});
             }
+
+            const email = request.body.email;
+            const password = request.body.password;
+
+            let user = await signUpTemplateCopy.findOne({email});
+
 
             if (!user){
                 return response.status(401).json({ msg: "There is no user with this e-mail"});
@@ -121,7 +124,6 @@ router.post(
                 (err, token) => {
                     if (err) throw err;
                     response.json({token});
-
                 }
             )
             

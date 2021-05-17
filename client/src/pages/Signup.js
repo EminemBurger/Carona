@@ -1,86 +1,28 @@
-import React, { useState, useEffect } from 'react'
-import { registerUser } from '../action/auth'
-import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
-import $ from 'jquery'
-import '../App.css'
+import React from 'react';
+import  Signupdiv from '../components/Signupdiv';
+import { Monariza } from '../components/Monariza';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    container: {
+        display: 'grid',
+        gridTemplateRows: '100%',
+        gridTemplateColumns:'50% 50%',
+    }
+}));
 
 
-const Signup = ({ isLoggedIn, registerUser }) => {
 
+export default function Signup() {
 
-    useEffect(() => {
-        $('input').on('focus', function () {
-            $(this).parents('.form-group').addClass('focused');
-        });
-
-        $('input').on('blur', function () {
-            var inputValue = $(this).val();
-            if (inputValue === "") {
-                $(this).parents('.form-group').removeClass('filled');
-                $(this).parents('.form-group').removeClass('focused');
-            } else {
-                $(this).parents('.form-group').addClass('filled');
-            }
-        })
-    }, [])
-
-
-    const [Fullname, setFullname] = useState('')
-    const [Username, setUsername] = useState('')
-    const [Email, setEmail] = useState('')
-    const [Password, setPassword] = useState('')
-
-    if (isLoggedIn) return <Redirect to="/"></Redirect>
-
+    const classes = useStyles();
 
     return (
-
-        <div className="limiter" >
-            <div className="gogh">
-            </div>
-
-
-            <div className="Login-ddiv">
-                <div className="Login-div" style={{paddingTop:"10px", height:"400px"}}>
-                    <h1>SIGN UP</h1>
-                    <div className="form-group">
-                        <label className="form-label">Fullname</label>
-                        <input className="form-input" type="text" value={Fullname} onChange={(e) => setFullname(e.target.value)} />
-                    </div>
-                    <div className="form-group">
-                        <label className="form-label">Username</label>
-                        <input className="form-input" type="text" value={Username} onChange={(e) => setUsername(e.target.value)} />
-                    </div>
-                    <div className="form-group">
-                        <label className="form-label">Email</label>
-                        <input className="form-input" type="text" value={Email} onChange={(e) => setEmail(e.target.value)} />
-                    </div>
-                    <div className="form-group">
-                        <label className="form-label">Password</label>
-                        <input type="password" placeholder="Password" value={Password} onChange={(e) => setPassword(e.target.value)}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                    registerUser(Fullname, Username, Email, Password)
-                                }
-                            }} />
-
-                    </div>
-
-                    <button className="btn-grad" onClick={(e) => {
-                        registerUser(Fullname, Username, Email, Password)
-                    }} >SIGN UP</button>
-
-                </div>
-            </div>
-
+        <div className={classes.container}>
+            <Monariza/>
+            <Signupdiv/>
         </div>
-
+   
     )
 }
 
-const mapStateToProps = state => ({
-    isLoggedIn: state.isLoggedIn
-})
-
-export default connect(mapStateToProps, { registerUser })(Signup)

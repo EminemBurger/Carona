@@ -1,87 +1,35 @@
-import React, { useState, useEffect } from 'react'
-import { Link, Redirect } from 'react-router-dom'
-import { loginUser } from '../action/auth'
-import { connect } from 'react-redux'
-import '../App.css'
-import $ from 'jquery'
+import React from 'react'
+import  LoginDiv from '../components/Logindiv';
+import { Monariza } from '../components/Monariza';
+import { makeStyles } from '@material-ui/core/styles';
 
 
+const useStyles = makeStyles((theme) => ({
+    container: {
+        display: 'grid',
+        gridTemplateRows: '100%',
+        gridTemplateColumns:'50% 50%',
+        minWidth: '1600px',
+    }
+}));
 
 
-const Login = ({ loginUser, isLoggedIn }) => {
-
-
-    const [Email, SetEmail] = useState('')
-    const [Password, SetPassword] = useState('')
-
-    useEffect(() => {
-        $('input').on('focus', function () {
-            $(this).parents('.form-group').addClass('focused');
-        });
-
-        $('input').on('blur', function () {
-            var inputValue = $(this).val();
-            if (inputValue === "") {
-                $(this).parents('.form-group').removeClass('filled');
-                $(this).parents('.form-group').removeClass('focused');
-            } else {
-                $(this).parents('.form-group').addClass('filled');
-            }
-        })
-    }, [])
-
-
-
-    if (isLoggedIn) return <Redirect to="/" />
+export default function Login() {
+    const classes = useStyles();
 
     return (
-        <div className="limiter" >
-        <div className="gogh">
-        </div>
-
-
-        <div className="Login-ddiv">
-            <div className="Login-div">
-                <h1>Login</h1>
-                <div className="form-group">
-                    <label className="form-label">Email</label>
-                    <input className="form-input" type="text" value={Email} onChange={(e) => SetEmail(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                loginUser(Email, Password)
-                            }
-                        }}
-                    />
-                </div>
-                <div className="form-group">
-                    <label className="form-label">Password</label>
-                    <input className="form-input" type="password" value={Password} onChange={(e) => SetPassword(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                loginUser(Email, Password)
-                            }
-                        }} />
-                </div>
-                <div style={{ width: "200px", marginTop: "10px" }}>
-                    <Link to="/signup" style={{ float: "right", fontSize: "13px", textDecoration: "none" }}>
-                        SIGN UP
-						</Link>
-                </div>
-                <button className="btn-grad" onClick={(e) => {
-                    loginUser(Email, Password)
-                }}>Login</button>
-            </div>
-        </div>
-
+        <div className={classes.container}>
+            <Monariza/>
+            <LoginDiv/>
         </div>
     )
 }
 
-const mapStateToProps = (state) => ({
-    isLoggedIn: state.isLoggedIn
-})
 
-export default connect(mapStateToProps, { loginUser })(Login)
+
+
+
+
 
 
 

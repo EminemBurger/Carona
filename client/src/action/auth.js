@@ -12,8 +12,8 @@ import {
 import { setToken } from '../setToken'
 
 export const loadUser = () => async dispatch => {
-    if (localStorage.getItem('token')) {
-        setToken(localStorage.getItem('token'));
+    if (sessionStorage.getItem('token')) {
+        setToken(sessionStorage.getItem('token'));
     }
     
     try {
@@ -31,7 +31,6 @@ export const loadUser = () => async dispatch => {
 }
 
 export const registerUser = (fullname, username, email, password) => async dispatch => {
-    try {
         const config = {
             headers: {
                 'Content-Type' : 'application/json'
@@ -39,53 +38,56 @@ export const registerUser = (fullname, username, email, password) => async dispa
         }
 
         const body = JSON.stringify({fullname, username, email, password})
+      
+        let where_go = false;
 
 
-        const response = await axios.post('http://localhost:4000/app/signup', body, config)
-        
+        await axios.post('http://localhost:4000/app/signup', body, config)
+        .then(function(response){
+            dispatch({
+                type: REGISTER_SUCCESS,
+                payload: response.data
+            })
 
-        dispatch({
-            type: REGISTER_SUCCESS,
-            payload: response.data
+            dispatch(loadUser());
+        })
+        .catch(function(error) {
+            dispatch({ type: REGISTER_FAIL, payload: error })
+            where_go = true;
         })
 
-        dispatch(loadUser());
 
-    } catch (error) {
-        dispatch({ type: REGISTER_FAIL, payload: error })
-    }
+        return where_go;
+
 
 }
 
 export const loginUser = (email, password) => async dispatch => {
-    try {
         const config = {
             headers: {
                 'Content-Type' : 'application/json'
             }
         }
 
-        const body = JSON.stringify({email, password})
+        const body = JSON.stringify({email, password});
 
+        let where_go = false;
 
-
-        const response = await axios.post('http://localhost:4000/app/signin', body, config)
-        
-
-
-
-
-        dispatch({
-            type: LOGIN_SUCCESS,
-            payload: response.data
+        await axios.post('http://localhost:4000/app/signin', body, config)
+        .then(function(response){ 
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: response.data
+            })
+    
+            dispatch(loadUser());
         })
-
-        dispatch(loadUser());
-
-    } catch (error) {
-        dispatch({ type: LOGIN_FAIL, payload: error })
-    }
-
+        .catch(function(error) {
+            dispatch({ type: LOGIN_FAIL, payload: error });
+            where_go = true;
+            
+        })
+    return where_go;
 }
 
 export const logOut = () => async dispatch => {
