@@ -16,7 +16,7 @@ const BoardBtn = ({isLoggedIn}) => {
          modify: 0
        }
       }}>
-      <Button  color = '#e28f83' variant="contained" style={{float:"right", marginRight:"10px"}}>
+      <Button  color = '#e28f83' variant="contained" style={{float:"right", marginRight:"10px", fontFamily: 'Noto Sans KR, sans-serif'}}>
               글쓰기
       </Button>
       </Link>

@@ -22,6 +22,7 @@ const newStyles = makeStyles((theme) => ({
     "footer footer footer"`,
     gridTemplateRows:'600px 200px 400px 500px 180px', 
     gridTemplateColumns: 'minmax(550px, 1fr) minmax(550px, 1fr) minmax(550px, 1fr)',
+    fontFamily: 'KoHo, sans-serif',
   },
 
   header: {

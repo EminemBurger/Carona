@@ -139,17 +139,17 @@ export default function Forum() {
     return (
         <div style ={{display:"flex", alignItems:"center", flexDirection:"column", height:'100vh'}}>
             
-                <TableContainer component={Paper} style={{marginTop:"100px", width: "1200px"}}>
+                <TableContainer component={Paper} style={{marginTop:"100px", width: "1200px",}}>
       <Table className={classes.table} aria-label="custom pagination table">
         <TableHead style ={{backgroundColor:"#4a503d"}}>
         <TableRow>
-              <TableCell component="th" scope="row" style ={{fontWeight:"bold", fontSize:"15px", color: '#faf2da '}}>
+              <TableCell component="th" scope="row" style ={{fontWeight:"bold", fontSize:"15px", color: '#faf2da', fontFamily: 'Noto Sans KR, sans-serif'}}>
                 제목
               </TableCell>
-              <TableCell style={{ width: 160 , fontWeight:"bold", fontSize:"15px", color: '#faf2da '}} align="right">
+              <TableCell style={{ width: 160 , fontWeight:"bold", fontSize:"15px", color: '#faf2da' , fontFamily: 'Noto Sans KR, sans-serif'}} align="right">
                 글쓴이
               </TableCell>
-              <TableCell style={{ width: 160 , fontWeight:"bold", fontSize:"15px", color: '#faf2da ' }} align="right">
+              <TableCell style={{ width: 160 , fontWeight:"bold", fontSize:"15px", color: '#faf2da ', fontFamily: 'Noto Sans KR, sans-serif'}} align="right">
                 날짜
               </TableCell>
             </TableRow>

@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: '10px',
         boxShadow: '0px 0px 10px 1px inset gray',
         "& h1": {
-            fontFamily: 'Alfa Slab One, cursive',
+            fontFamily: 'KoHo, sans-serif',
             fontSize:'25px'
         }
     },
@@ -100,6 +100,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius:'30px',
         cursor:'pointer',
         marginTop:'40px',
+        fontFamily: 'KoHo, sans-serif',
         "&:hover": {
             backgroundPosition:'right center',
             color:'#8e9775',

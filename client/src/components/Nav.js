@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     width:'100%',
     zIndex:3,
     height: '5vh',
+    fontFamily: 'KoHo, sans-serif',
    },
    
    
@@ -31,12 +32,12 @@ const useStyles = makeStyles((theme) => ({
             height: '100%',
             paddingLeft: 0,
             "&:hover": {
-                backgroundColor: 'white',
+                backgroundColor: 'black',
             },
         },
         "& a": {
             textDecoration: 'none',
-            color: 'black',
+            color: 'white',
         },
         "& img": {
             width:'60px',
