@@ -28,11 +28,9 @@
 * 마찬가지로 프론트에서 사용되는 모듈들을 설치하기 위해 client 디렉터리를 현재 디렉터리로 하고, 명령을 실행합니다.
 
 {% highlight js %}
-
     npm start // in Carona folder
     cd client
-    npm start // in client folder
-
+    npm start // in client folder  
 {% endhighlight js %}
 
 * 모듈이 성공적으로 설치되었다면, start 명령을 통해 애플리케이션을 실행시킬 수 있습니다.
