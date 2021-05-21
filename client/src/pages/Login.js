@@ -7,9 +7,11 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'grid',
-        gridTemplateRows: '100%',
+        gridTemplateRows: 'minmax(1100px, 1fr)',
         gridTemplateColumns:'50% 50%',
-        minWidth: '1600px',
+        minWidth: '1200px',
+        height: '100%',
+        minHeight:'100%',
     }
 }));
 

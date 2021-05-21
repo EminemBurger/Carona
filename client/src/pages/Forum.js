@@ -137,7 +137,7 @@ export default function Forum() {
 
 
     return (
-        <div style ={{display:"flex", alignItems:"center", flexDirection:"column", height:'100vh'}}>
+        <div style ={{display:"flex", alignItems:"center", flexDirection:"column", height:'1100px', minHeight:'1100px'}}>
             
                 <TableContainer component={Paper} style={{marginTop:"100px", width: "1200px",}}>
       <Table className={classes.table} aria-label="custom pagination table">

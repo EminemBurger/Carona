@@ -8,7 +8,7 @@ import ModalComp from './Modal';
 const useStyles = makeStyles((theme) => ({
     login_ddiv: {
         width: '100%',
-        height: '1000px',
+        height: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
     },
 
     login_div: {
-        width: '40%',
-        height: '40%',
+        width: '300px',
+        height: '300px',
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',

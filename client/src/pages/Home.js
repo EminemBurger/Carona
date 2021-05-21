@@ -14,7 +14,8 @@ const newStyles = makeStyles((theme) => ({
   wrap: {
     display: 'grid',
     width: '100%',
-    height:'1280px',
+    minHeight: '1880px',
+    height: '1880px',
     gridTemplateAreas:`"header header header"
     "body_header body_header body_header"
     "single_works1 single_works2 single_works3"

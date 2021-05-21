@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     width:'100%',
     zIndex:3,
-    height: '5vh',
+    height: '35px',
     fontFamily: 'KoHo, sans-serif',
    },
    

@@ -28,7 +28,7 @@ const App = () => {
   return (
 
     <Provider store={store}>
-      <div style={{minHeight:'100vh', height:'100vh'}}>
+      <div>
 
         <BrowserRouter>
           <Nav/>
