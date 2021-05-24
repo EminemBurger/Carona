@@ -2,7 +2,7 @@ import React from 'react'
 import { useLocation} from 'react-router-dom'
 import '../App.css'
 import ModandDelBtn from '../components/ModandDelBtn';
-
+import BoardComponent from '../components/BoardDetail';
 
 
 export default function BoardDetail() {
@@ -14,30 +14,9 @@ export default function BoardDetail() {
 
     return (
         <div className="wrap" style ={{display:"flex", alignItems:"center", flexDirection:"column", height:"900px"}}>
-            <div style= {{marginTop:"100px",  borderTop:"groove 5px", borderBottom:"groove 5px", height:"600px"}}>
-                <div>
-                <label style ={{width:"600px", fontWeight:"bold", fontSize:"20px" ,marginLeft:"10px", marginRight:"10px"}}>
-            {title}
-         </label>
-                </div>
-        <div>
-        <label style ={{width:"600px", fontSize:"15px", marginLeft:"10px", marginRight:"10px"}}>
-            {username}
-         </label>
-        </div>
-
-         <div style={{borderStyle:"solid", borderColor:"black", borderWidth:"2px", width:"600px", marginTop:"10px", backgroundColor:"black"}}></div>
-         <div style={{marginTop:"10px"}}>
-         <label style = {{width:"600px", marginLeft:"10px", marginRight:"10px"}}>
-             {content}
-             </label>
-         </div>
-  
-            </div>
+   
+        <BoardComponent title={title} username={username} content={content}/>
         <ModandDelBtn title = {title} content={content} createdAt={createdAt}/>
-
-
-
 
         </div>
     )
